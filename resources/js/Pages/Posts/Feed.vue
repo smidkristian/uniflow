@@ -25,6 +25,25 @@
                 <div class="text-xl p-4">
                     {{post.description}}
                 </div>
+                <div class="flex justify-around border-b-2 border-gray-300">
+                    <div class="flex justify-around p-4">
+                        <button>Upvote</button>
+                        <button class="ml-4">Downvote</button>
+                    </div>
+                    <div class="flex p-4">
+                        <button>Responses</button>
+                    </div>
+                    <div class="p-4">
+                        <button @click="postDetail(post.id)" class="btn-header">Respond</button>
+                    </div>
+                </div>
+                <!-- <div v-for="response in responses" :key="response.id" class="bg-gray-100">
+                    <div v-if="response.post_id === post.id">
+                        <div class="px-4 py-2">
+                            <span class="text-blue-600">{{response.user}}</span> {{response.response}}
+                        </div>
+                    </div>
+                </div> -->
             </div>
         </div>
 
@@ -34,12 +53,13 @@
 
 <script>
     import AppLayout from '@/Layouts/AppLayout'
-    import CreatePost from '@/Components/CreatePost'
+    import CreatePost from '@/Components/post/CreatePost'
 
     export default {
         props: [
+            'users',
             'posts',
-            'users'
+            'responses'
         ],
 
         components: {
@@ -52,10 +72,15 @@
                 create: false,
             }
         },
+
         methods: {
             log() {
                 console.log('finished');
-            }
+            },
+
+            postDetail(id) {
+                this.$inertia.get( '/post', { data: { id: id } });
+            },
         }
     }
 </script>
