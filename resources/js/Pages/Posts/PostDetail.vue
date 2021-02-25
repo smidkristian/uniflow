@@ -1,5 +1,23 @@
 <template>
     <app-layout>
+        <template #header>
+            <div class="flex justify-between">
+                <div class="font-semibold text-xl text-gray-800">
+                    <h2>
+                        {{ post.title }}
+                    </h2>
+                </div>
+                <div>
+                    <button v-if="create == false" @click="create = true" class="btn-header">
+                        New Post
+                    </button>
+                    <button v-if="create == true" @click="create = false" class="btn-header">
+                        Back
+                    </button>
+                </div>
+            </div>
+        </template>
+
         <div class="bg-white w-full lg:w-2/5 mx-auto mt-10 rounded-md shadow">
             <h1 class="text-3xl text-gray-800 p-4 my-4">{{post.title}}</h1>
             <div class="text-xl p-4">

@@ -66,4 +66,12 @@ class User extends Authenticatable
     public function responses() {
         return $this->hasMany(Response::class);
     }
+
+    public function post_votes() {
+        return $this->hasMany(PostVote::class, 'user', 'username');
+    }
+
+    public function response_votes() {
+        return $this->hasMany(ResponseVote::class, 'user', 'username');
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\PostVote;
 use App\Models\Response;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,14 +14,12 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with(['post_votes'])->get();
-        $responses = Response::with('response_votes')->get();
-        $users = User::all();
+        $posts = Post::orderBy('id', 'desc')->get();
+        $user_post_votes = auth()->user()->post_votes()->get();
 
         return Inertia::render('Posts/Feed', [
-            'users' => $users,
             'posts' => $posts,
-            'responses' => $responses
+            'user_post_votes' => $user_post_votes
         ]);
     }
 
@@ -35,9 +34,8 @@ class PostController extends Controller
         return Redirect::route('posts');
     }
 
-    public function view(Request $request)
+    public function view($id)
     {
-        $id = $request->data['id'];
         $target = Post::find($id);
         $responses = $target->responses()->get();
 
@@ -47,9 +45,23 @@ class PostController extends Controller
         ]);
     }
 
-    public function edit(Post $post)
+    public function vote(Request $request)
     {
-        //
+        PostVote::create($request->all());
+        $target = Post::find($request->post_id);
+
+        if($request->vote == 1) {
+            $target->increment('upvotes_count');
+        } else {
+            $target->increment('downvotes_count');
+        }
+
+        return response()->json($request);
+    }
+
+    public function create() {
+
+        return Inertia::render('Posts/CreatePost');
     }
 
     public function update(Request $request, Post $post)

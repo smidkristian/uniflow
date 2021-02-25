@@ -17,8 +17,7 @@ class CreatePostVotesTable extends Migration
             $table->id();
             $table->string('user');
             $table->unsignedBigInteger('post_id');
-            $table->boolean('votes');
-            $table->boolean('solved');
+            $table->boolean('vote');
 
             $table->foreign('user')->references('username')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('post_id')->references('id')->on('posts')->onUpdate('cascade')->onDelete('cascade');
