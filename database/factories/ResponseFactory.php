@@ -26,10 +26,10 @@ class ResponseFactory extends Factory
 
         return [
             'user' => $users[$this->faker->numberBetween(1, 10)]->username,
-            'post_id' => $this->faker->numberBetween(1, 10),
-            'response' => $this->faker->text(40),
-            'created_at' => now(),
-            'created_at' => now(),
+            'post_id' => $this->faker->numberBetween(1, 30),
+            'response' => $this->faker->text(60),
+            // 'upvotes_count' => $this->faker->randomNumber(2),
+            // 'downvotes_count' => $this->faker->randomNumber(2),
         ];
     }
 }

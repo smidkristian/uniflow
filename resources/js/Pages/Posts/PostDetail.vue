@@ -7,13 +7,13 @@
                         {{ post.title }}
                     </h2>
                 </div>
-                <div>
-                    <button v-if="create == false" @click="create = true" class="btn-header">
-                        New Post
-                    </button>
-                    <button v-if="create == true" @click="create = false" class="btn-header">
+                <div class="flex">
+                    <inertia-link :href="route('posts')" class="btn-header">
                         Back
-                    </button>
+                    </inertia-link>
+                    <inertia-link :href="route('create-post')" class="btn-header ml-4">
+                        New Post
+                    </inertia-link>
                 </div>
             </div>
         </template>

@@ -2,12 +2,12 @@
     <div class="grid grid-cols-2 border-b-2 border-gray-300">
         <div class="grid grid-cols-2 justify-between py-4 px-8">
             <div class="flex mr-4 px-2 rounded-md">
-                <span class="mr-2">{{ post.upvotes_count }}</span>
+                <span class="mr-2">{{ upvotes_count }}</span>
                 <button @click="vote(post.id, 1)" class="px-2 rounded-md focus:outline-none border-2 border-green-200"
                     :class="{ 'bg-green-200' : upvoted.includes(post.id) }">Up</button>
             </div>
             <div class="flex px-2 rounded-md">
-                <span class="mr-2">{{ post.downvotes_count }}</span>
+                <span class="mr-2">{{ downvotes_count }}</span>
                 <button @click="vote(post.id, 0)" class="px-2 rounded-md focus:outline-none border-2 border-red-200"
                     :class="{ 'bg-red-200' : downvoted.includes(post.id) }">Down</button>
             </div>
@@ -36,6 +36,9 @@
             return {
                 upvoted: this.upvotes,
                 downvoted: this.downvotes,
+
+                upvotes_count: this.post.upvotes_count,
+                downvotes_count: this.post.downvotes_count
             }
         },
 
@@ -54,10 +57,11 @@
 
                         if (index > -1) {
                             this.upvoted.splice(index, 1);
+                            this.upvotes_count -= 1;
                             console.log('upvote removed client-side!');
                         }
 
-                        axios.post(route('delete-post-vote'), { user: this.$page.props.user.username, post_id: post_id, vote: vote })
+                        axios.post(route('post-vote-delete'), { user: this.$page.props.user.username, post_id: post_id, vote: vote })
                         .then(
                             console.log('upvoted removed from the database.\n') )
                         .catch(error => {
@@ -65,28 +69,22 @@
                         });
 
                     } else {
-
+                        // user is changing his vote
                         console.log('from up to down');
 
                         let index = this.upvoted.indexOf(post_id);
 
                         if (index > -1) {
                             this.upvoted.splice(index, 1);
+                            this.upvotes_count -= 1;
                             this.downvoted.push(post_id);
+                            this.downvotes_count += 1;
                             console.log('upvote changed to downvote');
                         }
 
-                        // here we have to change the vote to 1, because we are deleting vote from the past
-                        axios.post(route('delete-post-vote'), { user: this.$page.props.user.username, post_id: post_id, vote: 1 })
+                        axios.post(route('post-vote-update'), { user: this.$page.props.user.username, post_id: post_id, vote: vote })
                         .then(
-                            console.log('upvote removed from the database') )
-                        .catch(error => {
-                            console.log(error);
-                        });
-
-                        axios.post(route('post-vote'), { user: this.$page.props.user.username, post_id: post_id, vote: vote })
-                        .then(
-                            console.log('downvoted server-side.\n') )
+                            console.log('postvote updated') )
                         .catch(error => {
                             console.log(error);
                         });
@@ -104,10 +102,11 @@
 
                         if (index > -1) {
                             this.downvoted.splice(index, 1);
+                            this.downvotes_count -= 1;
                             console.log('downvote removed client-side!');
                         }
 
-                        axios.post(route('delete-post-vote'), { user: this.$page.props.user.username, post_id: post_id, vote: vote })
+                        axios.post(route('post-vote-delete'), { user: this.$page.props.user.username, post_id: post_id, vote: vote })
                         .then(
                             console.log('downvote removed from the database.\n') )
                         .catch(error => {
@@ -115,44 +114,40 @@
                         });
 
                     } else {
-
+                        // user is changing his vote
                         console.log('from down to up');
 
                         let index = this.downvoted.indexOf(post_id);
 
                         if (index > -1) {
                             this.downvoted.splice(index, 1);
+                            this.downvotes_count -= 1;
                             this.upvoted.push(post_id);
+                            this.upvotes_count += 1;
                             console.log('downvote changed to upnvote');
                         }
 
-                        // here we have to change the vote to 0, because we are deleting vote from the past
-                        axios.post(route('delete-post-vote'), { user: this.$page.props.user.username, post_id: post_id, vote: 0 })
+                        axios.post(route('post-vote-update'), { user: this.$page.props.user.username, post_id: post_id, vote: vote })
                         .then(
-                            console.log('downvote removed from the database') )
-                        .catch(error => {
-                            console.log(error);
-                        });
-
-                        axios.post(route('post-vote'), { user: this.$page.props.user.username, post_id: post_id, vote: vote })
-                        .then(
-                            console.log('upvoted server-side.\n') )
+                            console.log('postvote updated') )
                         .catch(error => {
                             console.log(error);
                         });
                     }
                 }
-
+                // user did not vote yet
                 else {
 
-                    axios.post(route('post-vote'), { user: this.$page.props.user.username, post_id: post_id, vote: vote })
+                    axios.post(route('post-vote-store'), { user: this.$page.props.user.username, post_id: post_id, vote: vote })
                     .then(response => {
                         console.log(response.data);
                         if(vote == 1) {
                             this.upvoted.push(post_id);
+                            this.upvotes_count += 1;
                             console.log('upvoted.\n')
                         } else {
                             this.downvoted.push(post_id);
+                            this.downvotes_count += 1;
                             console.log('downvoted.\n')
                         }
                     })

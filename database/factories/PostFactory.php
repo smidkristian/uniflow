@@ -26,8 +26,11 @@ class PostFactory extends Factory
 
         return [
             'user' => $users[$this->faker->numberBetween(1, 10)]->username,
-            'title' => $this->faker->text(20),
-            'description' => $this->faker->text(30),
+            'title' => $this->faker->text(60),
+            'description' => $this->faker->text(100),
+            'responses_count' => $this->faker->randomNumber(2),
+            'upvotes_count' => $this->faker->randomNumber(2),
+            'downvotes_count' => $this->faker->randomNumber(2),
             'created_at' => now(),
             'created_at' => now(),
         ];

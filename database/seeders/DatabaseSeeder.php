@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Post;
+use App\Models\PostVote;
 use App\Models\Response;
+use App\Models\ResponseVote;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -25,7 +27,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory(10)->create();
-        Post::factory(20)->create();
+        Post::factory(30)->create();
         Response::factory(100)->create();
+        PostVote::factory(30)->create();
+        ResponseVote::factory(100)->create();
     }
 }

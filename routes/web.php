@@ -44,8 +44,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group( function () {
 
     // VOTES
 
-    Route::post('/post-vote', [PostController::class, 'vote'])->name('post-vote');
-    Route::post('/delete-post-vote', [PostVoteController::class, 'delete'])->name('delete-post-vote');
+    Route::post('/post-vote-store', [PostVoteController::class, 'store'])->name('post-vote-store');
+    Route::post('/post-vote-delete', [PostVoteController::class, 'delete'])->name('post-vote-delete');
+    Route::post('/post-vote-update', [PostVoteController::class, 'update'])->name('post-vote-update');
 
 });
 

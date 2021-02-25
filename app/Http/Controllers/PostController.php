@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use App\Models\PostVote;
-use App\Models\Response;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -43,20 +40,6 @@ class PostController extends Controller
             'post' => $target,
             'responses' => $responses
         ]);
-    }
-
-    public function vote(Request $request)
-    {
-        PostVote::create($request->all());
-        $target = Post::find($request->post_id);
-
-        if($request->vote == 1) {
-            $target->increment('upvotes_count');
-        } else {
-            $target->increment('downvotes_count');
-        }
-
-        return response()->json($request);
     }
 
     public function create() {
