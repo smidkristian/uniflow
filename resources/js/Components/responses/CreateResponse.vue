@@ -11,7 +11,8 @@
                 <!-- <span class="text-xs text-red-700 uppercase mt-2">{{ errors.response }}</span> -->
             </div>
             <div class="flex justify-end">
-                <button type="submit" class="btn">Save</button>
+                <button @click="$emit('finished')" type="button" class="btn mt-2">Cancel</button>
+                <button type="submit" class="btn mt-2 ml-2">Save</button>
             </div>
         </form>
     </div>

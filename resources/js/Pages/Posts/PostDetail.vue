@@ -1,54 +1,51 @@
 <template>
     <app-layout>
         <template #header>
-            <div class="flex justify-between">
-                <div class="font-semibold text-xl text-gray-800">
+            <div class="flex flex-col lg:flex-row-reverse justify-between">
+                <div class="flex justify-end">
+                    <inertia-link :href="route('posts')" class="btn">
+                        Back
+                    </inertia-link>
+                </div>
+
+                <div class="font-semibold text-gray-800 text-xl hidden lg:flex">
                     <h2>
                         {{ post.title }}
                     </h2>
                 </div>
-                <div class="flex">
-                    <inertia-link :href="route('posts')" class="btn-header">
-                        Back
-                    </inertia-link>
-                    <inertia-link :href="route('create-post')" class="btn-header ml-4">
-                        New Post
-                    </inertia-link>
-                </div>
             </div>
         </template>
 
-        <div class="bg-white w-full lg:w-2/5 mx-auto mt-10 rounded-md shadow">
-            <h1 class="text-3xl text-gray-800 p-4 my-4">{{post.title}}</h1>
-            <div class="text-xl p-4">
+        <div class="bg-white w-full lg:w-2/5 mx-auto mt-10 rounded-md shadow p-2">
+            <h1 class="text-xl lg:text-3xl text-gray-800 p-2 my-4">{{post.title}}</h1>
+            <div class="p-2 lg:text-xl">
                 {{post.description}}
+            </div>
+            <div class="flex justify-end mr-2 text-gray-600 text-lg">
+                <span class="text-gray-500 mr-2"> from </span> {{post.user}}
             </div>
         </div>
         <div class="w-full lg:w-2/5 mx-auto mt-10">
-            <div class="flex justify-between bg-gray-200 rounded-md shadow-inner border-b border-gray-300">
-                <h1 class="text-2xl text-gray-600 p-4">Responses</h1>
-                <div class="flex items-center mx-4">
-                    <button @click="create = true" class="btn-header">New Response</button>
-                </div>
-            </div>
-            <create-response v-if="create == true" @finished="create = false" :post="post" />
-
-            <div v-for="response in responses" :key="response.id" class="flex border-b-2 border-gray-200 py-6 px-4">
-                <h1 class="text-blue-600">
-                    {{ response.user }}
-                </h1>
-                <div class="ml-2">
-                    {{ response.response }}
-                </div>
+        <div class="flex justify-between bg-gray-200 rounded-md shadow-inner border-b border-gray-300">
+            <h1 class="text-2xl text-gray-600 p-4">Responses</h1>
+            <div class="flex items-center mx-4">
+                <button @click="responding = true" class="btn">New Response</button>
             </div>
         </div>
+
+        <create-response v-if="responding == true" @finished="responding = false" :post="post" />
+
+        <show-responses :responses="responses" />
+
+    </div>
     </app-layout>
 </template>
 
 <script>
 
     import AppLayout from '@/Layouts/AppLayout'
-    import CreateResponse from '@/Components/post/CreateResponse'
+    import CreateResponse from '@/Components/responses/CreateResponse'
+    import ShowResponses from '@/Components/responses/ShowResponses'
 
     export default {
         props: [
@@ -57,13 +54,15 @@
         ],
         components: {
             AppLayout,
-            CreateResponse
+            CreateResponse,
+            ShowResponses
         },
         data() {
             return {
-                create: false,
+                responding: false,
+                commenting: null
             }
-        },
+        }
 
 
     }

@@ -5,7 +5,7 @@
                 <h2 class="font-semibold text-xl text-gray-800">
                     Posts
                 </h2>
-                <inertia-link :href="route('posts')" class="btn-header">
+                <inertia-link :href="route('posts')" class="btn">
                     Back
                 </inertia-link>
             </div>
@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="flex justify-end">
-                    <button type="submit" class="btn">Save</button>
+                    <button type="submit" class="btn mt-2">Save</button>
                 </div>
             </form>
         </div>

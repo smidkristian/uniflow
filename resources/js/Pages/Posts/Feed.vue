@@ -5,7 +5,7 @@
                 <h2 class="font-semibold text-xl text-gray-800">
                     Posts
                 </h2>
-                <inertia-link :href="route('create-post')" class="btn-header">
+                <inertia-link :href="route('create-post')" class="btn">
                     New Post
                 </inertia-link>
             </div>
@@ -14,19 +14,19 @@
         <!-- FEED -->
 
         <div class="flex flex-col">
-            <div v-for="post in posts" :key="post.id" class="bg-white rounded-md shadow my-4 lg:w-2/5 mx-auto">
-                <div class="flex justify-end text-xs pt-2 pr-2 text-gray-600">
-                    <div class="mr-2">
-                        user:
-                    </div>
+            <div v-for="post in posts" :key="post.id" class="bg-white rounded-md shadow my-4 lg:w-2/5 mx-auto p-2">
+                <div class="flex justify-end text-sm pt-2 pr-2 text-gray-600">
                     <div>
-                        {{post.user}}
+                        <span class="text-gray-500"> user: </span> {{post.user}}
                     </div>
                 </div>
-                <h1 class="text-2xl p-4 text-gray-800">{{post.title}}</h1>
-                <div class="text-xl p-4">
+
+                <h1 class="text-lg lg:text-2xl p-4 text-gray-800">{{post.title}}</h1>
+
+                <div class="lg:text-lg p-4">
                     {{post.description}}
                 </div>
+
                 <post-votes :post="post" :upvotes="upvoted" :downvotes="downvoted" />
             </div>
         </div>

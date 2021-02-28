@@ -1,24 +1,23 @@
 <template>
-    <div class="grid grid-cols-2 border-b-2 border-gray-300">
-        <div class="grid grid-cols-2 justify-between py-4 px-8">
-            <div class="flex mr-4 px-2 rounded-md">
-                <span class="mr-2">{{ upvotes_count }}</span>
-                <button @click="vote(post.id, 1)" class="px-2 rounded-md focus:outline-none border-2 border-green-200"
-                    :class="{ 'bg-green-200' : upvoted.includes(post.id) }">Up</button>
-            </div>
-            <div class="flex px-2 rounded-md">
-                <span class="mr-2">{{ downvotes_count }}</span>
-                <button @click="vote(post.id, 0)" class="px-2 rounded-md focus:outline-none border-2 border-red-200"
-                    :class="{ 'bg-red-200' : downvoted.includes(post.id) }">Down</button>
+    <div class="grid grid-cols-3 py-4">
+        <div class="grid col-span-2">
+            <div class="flex lg:ml-4">
+                <div class="flex px-2 rounded-md">
+                    <span class="mr-2">{{ upvotes_count }}</span>
+                    <button @click="vote(post.id, 1)" class="px-2 rounded-md focus:outline-none border-2 border-green-200"
+                        :class="{ 'bg-green-200' : upvoted.includes(post.id) }">Up</button>
+                </div>
+                <div class="flex px-2 rounded-md">
+                    <span class="mr-2">{{ downvotes_count }}</span>
+                    <button @click="vote(post.id, 0)" class="px-2 rounded-md focus:outline-none border-2 border-red-200"
+                        :class="{ 'bg-red-200' : downvoted.includes(post.id) }">Down</button>
+                </div>
             </div>
         </div>
-        <div class="flex justify-end">
-            <div class="flex p-4">
+        <div>
+            <div class="flex justify-end mr-4">
                 <span class="mr-2">{{ post.responses_count }}</span>
-                <inertia-link :href="route('post-detail', post.id)">Responses</inertia-link>
-            </div>
-            <div class="p-4">
-                <inertia-link :href="route('post-detail', post.id)" class="btn-header">Respond</inertia-link>
+                <inertia-link :href="route('post-detail', post.id)" class="underline">Responses</inertia-link>
             </div>
         </div>
     </div>
