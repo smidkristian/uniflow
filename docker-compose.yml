@@ -3,7 +3,7 @@ version: '3'
 services:
     uniflow.app:
         build:
-            context: ./docker/8.0
+            context: ./vendor/laravel/sail/runtimes/8.0
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
@@ -22,7 +22,7 @@ services:
     mysql:
         image: 'mysql:8.0'
         ports:
-            - '${FORWARD_DB_PORT:-4306}:3306'
+            - '${FORWARD_DB_PORT:-3306}:3306'
         environment:
             MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
             MYSQL_DATABASE: '${DB_DATABASE}'
