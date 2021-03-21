@@ -39,10 +39,6 @@ jobs:
           context: ./docker/8.0
           push: true
           tags: smidkristian/uniflow:latest
-          build-args:
+          build-args: |
             USER_ID=root
             GROUP_ID=root
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Testing Github Actions!
