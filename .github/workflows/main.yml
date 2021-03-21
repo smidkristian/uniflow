@@ -34,7 +34,7 @@ jobs:
 
       - name: Build and push
         run: |
-          docker build -t uniflow --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) ./docker/8.0/Dockerfile
+          docker build -t uniflow --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) ./docker/8.0
           docker push smidkristian/uniflow
 
       - name: Run a multi-line script
