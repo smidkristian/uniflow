@@ -37,9 +37,11 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./docker/8.0
-          file: ./docker/8.0/Dockerfile
           push: true
           tags: smidkristian/uniflow:latest
+          build-args:
+            USER_ID=root
+            GROUP_ID=root
 
       # Runs a single command using the runners shell
       - name: Run a one-line script

@@ -2,6 +2,9 @@ FROM ubuntu:20.04
 
 LABEL maintainer="Taylor Otwell"
 
+ARG USER_ID
+ARG GROUP_ID
+
 WORKDIR /var/www/html
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -39,6 +42,10 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.0
+
+RUN addgroup --gid $GROUP_ID appuser
+RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID appuser
+USER appuser
 
 COPY start-container /usr/local/bin/start-container
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
