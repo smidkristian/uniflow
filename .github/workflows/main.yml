@@ -33,12 +33,11 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-          context: ./docker/8.0
-          push: true
-          tags: smidkristian/uniflow:latest
-          build-args: |
-            USER_ID=root
-            GROUP_ID=root
+        run: |
+          docker build -t uniflow --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) ./docker/8.0/Dockerfile
+          docker push smidkristian/uniflow
+
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
