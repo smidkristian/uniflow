@@ -34,7 +34,7 @@ jobs:
 
       - name: Build and push
         run: |
-          docker build -t uniflow ./docker/8.0
+          docker build -t uniflow --build-arg WWWGROUP=$(id -g) ./docker/8.0
           docker push smidkristian/uniflow
 
       - name: Run a multi-line script
